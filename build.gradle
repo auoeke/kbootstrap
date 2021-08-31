@@ -3,14 +3,18 @@ plugins {
     id("fabric.mod.gradle").version("latest.integration")
 }
 
+allprojects {
+    group = "net.auoeke"
+    version = "0.0.0"
+}
+
+mod {}
+
 subprojects {
     plugins.apply("wheel-fabric")
     plugins.apply("fabric.mod.gradle")
 
     defaultTasks("generateMetadata")
-
-    group = "net.auoeke"
-    version = "0.0.0"
 
     sourceSets {
         main {
