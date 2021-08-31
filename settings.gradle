@@ -11,4 +11,5 @@ pluginManagement {
 rootProject.name = "kbootstrap"
 
 includeBuild("plugin")
+
 include(":testmod")

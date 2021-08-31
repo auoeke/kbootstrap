@@ -1,1 +1,8 @@
-rootProject.name = "kbootstrap-loom"
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "kbootstrap-plugin"

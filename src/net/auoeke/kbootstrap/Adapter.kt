@@ -1,10 +1,8 @@
 package net.auoeke.kbootstrap
 
-import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.LanguageAdapter
 import net.fabricmc.loader.api.LanguageAdapterException
 import net.fabricmc.loader.api.ModContainer
-import net.fabricmc.loader.api.metadata.CustomValue
 import java.lang.invoke.MethodHandleProxies
 import java.lang.invoke.MethodHandles
 import java.lang.reflect.Field
@@ -12,7 +10,7 @@ import java.lang.reflect.Modifier
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "unused")
 internal class Adapter : LanguageAdapter {
     override fun <T> create(mod: ModContainer?, value: String, type: Class<T>): T = create(value, type)
 
@@ -56,7 +54,8 @@ internal class Adapter : LanguageAdapter {
                         if (field.modifiers and staticFinal == staticFinal) {
                             return@run
                         }
-                    } catch (ignored: NoSuchFieldException) {}
+                    } catch (ignored: NoSuchFieldException) {
+                    }
                 }
 
                 throw exception
@@ -110,13 +109,9 @@ internal class Adapter : LanguageAdapter {
     }
 
     init {
-        FabricLoader.getInstance().allMods.mapNotNull {it.metadata.customValues["kbootstrap:modules"]}.flatMapTo(HashSet()) {
-            when (it.type) {
-                CustomValue.CvType.STRING -> listOf(it.asString)
-                CustomValue.CvType.ARRAY -> it.asArray.map(CustomValue::getAsString)
-                else -> throw IllegalArgumentException("""The value of "kbootstrap:modules" may be either a string or an array of strings.""")
-            }
-        }.forEach {
+        Downloader.download(false, "stdlib", "kotlin.Unit")
+
+        Downloader.knotLoader.getResources("kbootstrap-metadata").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
             when (it.lowercase()) {
                 "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library)}
                 "reflect" -> Downloader.download(false, "reflect", "kotlin.reflect.jvm.KClassesJvm")

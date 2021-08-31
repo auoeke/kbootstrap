@@ -25,9 +25,9 @@ import org.w3c.dom.Node;
 
 class Downloader {
     static final Logger logger = LogManager.getLogger("KBootstrap");
+    static final ClassLoader knotLoader = Downloader.class.getClassLoader();
 
     private static final HttpClient http = HttpClient.newHttpClient();
-    private static final ClassLoader knotLoader = Downloader.class.getClassLoader();
     private static final MethodHandle addURL;
 
     private static int[] libraryVersion(String typeName) {

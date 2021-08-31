@@ -1,31 +1,33 @@
 plugins {
     id("wheel-fabric")
     id("fabric.mod.gradle")
+    id("kbootstrap-plugin").version("latest.release")
 }
 
 sourceSets {
     main {
-        java.srcDir("src")
+        kotlin.srcDir("src")
     }
 }
 
-loom {
+kbootstrap {
+    // The standard library is always included.
+    module("coroutines", "reflect", "serialization")
+    // or
+    allModules()
+}
+
+wheel {
     publish {
         enabled = false
     }
 }
 
 dependencies {
-    implementation(rootProject)
+    runtimeOnly(rootProject)
 }
 
 mod {
-    custom("kbootstrap:modules": [
-        "coroutines",
-        "reflect",
-        "serialization"
-    ])
-
     entrypoints(main: [kbootstrap: [
         "net.auoeke.testmod.Main::mainInitializer",
         "net.auoeke.testmod.Main",

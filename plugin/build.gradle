@@ -1,3 +1,45 @@
 plugins {
     id("java-gradle-plugin")
+    id("maven-publish")
+    id("org.jetbrains.kotlin.jvm").version("latest.release")
+}
+
+sourceSets {
+    main {
+        kotlin.srcDir("src")
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = targetCompatibility
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api("org.jetbrains.kotlin:kotlin-gradle-plugin:latest.release")
+}
+
+gradlePlugin {
+    plugins {
+        kbootstrap {
+            id = "kbootstrap-plugin"
+            implementationClass = "net.auoeke.kbootstrap.plugin.KBootstrapPlugin"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = "https://auoeke.jfrog.io/artifactory/maven"
+
+            credentials {
+                username = System.properties["maven.username"]
+                password = System.properties["maven.password"]
+            }
+        }
+    }
 }
