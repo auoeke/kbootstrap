@@ -8,6 +8,11 @@ pluginManagement {
     }
 }
 
-rootProject.name = "kbootstrap"
+rootProject.name = "kbootstrap-all"
 
 include(":testmod")
+
+include(":kbootstrap")
+include(":kbootstrap-reflect")
+include(":kbootstrap-coroutines")
+include(":kbootstrap-serialization")

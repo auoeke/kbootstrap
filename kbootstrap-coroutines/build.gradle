@@ -1,0 +1,10 @@
+dependencies {
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-core:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:latest.release")
+}
+
+mod {
+    entrypoints("kbootstrap": [kbootstrap: "net.auoeke.kbootstrap.Coroutines"])
+}

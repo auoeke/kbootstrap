@@ -1,0 +1,7 @@
+dependencies {
+    compileOnlyApi("org.jetbrains.kotlin:kotlin-reflect:latest.release")
+}
+
+mod {
+    entrypoints("kbootstrap": [kbootstrap: "net.auoeke.kbootstrap.Reflect"])
+}

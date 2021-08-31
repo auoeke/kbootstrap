@@ -3,15 +3,32 @@ plugins {
     id("fabric.mod.gradle").version("latest.integration")
 }
 
-group = "net.auoeke"
-version = "0.0.0"
+subprojects {
+    plugins.apply("wheel-fabric")
+    plugins.apply("fabric.mod.gradle")
 
-sourceSets {
-    main {
-        java.srcDir("src")
+    defaultTasks("generateMetadata")
+
+    group = "net.auoeke"
+    version = "0.0.0"
+
+    sourceSets {
+        main {
+            java.srcDir("src")
+        }
+    }
+
+    dependencies {
+        if (path != ":kbootstrap") {
+            api(project(":kbootstrap"))
+        }
     }
 }
 
-mod {
-    languageAdapter("kbootstrap", "net.auoeke.kbootstrap.KBootstrap")
+dependencies {
+    subprojects {
+        if (path != ":testmod") {
+            api(include(project))
+        }
+    }
 }

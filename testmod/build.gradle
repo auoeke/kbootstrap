@@ -1,11 +1,6 @@
 plugins {
-    id("wheel-fabric")
-    id("fabric.mod.gradle")
     id("org.jetbrains.kotlin.jvm").version("latest.integration")
 }
-
-group = "net.auoeke"
-version = "1.2.3"
 
 sourceSets {
     main {
@@ -17,14 +12,24 @@ compileKotlin {
     kotlinOptions.jvmTarget = targetCompatibility
 }
 
-repositories {
-    maven {url = "https://maven.auoeke.net"}
-}
-
 dependencies {
     implementation(rootProject)
-    implementation("net.auoeke:fabric-mod-gradle:latest.integration")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib:latest.integration")
 }
 
-mod {}
+mod {
+    entrypoints(main: [kbootstrap: [
+        "net.auoeke.testmod.Main::mainInitializer",
+        "net.auoeke.testmod.Main",
+        "net.auoeke.testmod.Main::init",
+        'net.auoeke.testmod.Main$NamedCompanion::staticInitializer',
+        'net.auoeke.testmod.Main$NamedCompanion::initializer',
+        'net.auoeke.testmod.Main$NamedCompanion::staticInit',
+        'net.auoeke.testmod.Main$NamedCompanion',
+        'net.auoeke.testmod.Main$NamedCompanion::init',
+        "net.auoeke.testmod.Object::staticInitializer",
+        "net.auoeke.testmod.Object::initializer",
+        "net.auoeke.testmod.Object::staticInit",
+        "net.auoeke.testmod.Object",
+        "net.auoeke.testmod.Object::init",
+    ]])
+}
