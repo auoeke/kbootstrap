@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+
+        maven {url = "https://maven.fabricmc.net"}
+        maven {url = "https://maven.auoeke.net"}
+    }
+}
+
+rootProject.name = "kbootstrap"
+
+include(":testmod")
