@@ -1,8 +1,0 @@
-dependencies {
-    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:latest.release")
-    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:latest.release")
-}
-
-mod {
-    entrypoints("kbootstrap": [kbootstrap: "net.auoeke.kbootstrap.Serialization"])
-}

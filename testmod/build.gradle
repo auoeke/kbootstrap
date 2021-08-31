@@ -1,15 +1,18 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm").version("latest.integration")
+    id("wheel-fabric")
+    id("fabric.mod.gradle")
 }
 
 sourceSets {
     main {
-        kotlin.srcDir("src")
+        java.srcDir("src")
     }
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = targetCompatibility
+loom {
+    publish {
+        enabled = false
+    }
 }
 
 dependencies {
@@ -17,6 +20,12 @@ dependencies {
 }
 
 mod {
+    custom("kbootstrap:modules": [
+        "coroutines",
+        "reflect",
+        "serialization"
+    ])
+
     entrypoints(main: [kbootstrap: [
         "net.auoeke.testmod.Main::mainInitializer",
         "net.auoeke.testmod.Main",

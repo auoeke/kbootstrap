@@ -1,9 +1,0 @@
-dependencies {
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib:latest.release")
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release")
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release")
-}
-
-mod {
-    languageAdapter("kbootstrap", "net.auoeke.kbootstrap.KBootstrap")
-}

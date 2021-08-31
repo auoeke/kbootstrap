@@ -1,38 +1,35 @@
 plugins {
     id("wheel-fabric").version("latest.integration")
     id("fabric.mod.gradle").version("latest.integration")
+    id("org.jetbrains.kotlin.jvm").version("latest.release")
 }
 
-allprojects {
-    group = "net.auoeke"
-    version = "0.0.0"
-}
+group = "net.auoeke"
+version = "0.0.0"
 
-mod {}
+defaultTasks("generateMetadata")
 
-subprojects {
-    plugins.apply("wheel-fabric")
-    plugins.apply("fabric.mod.gradle")
-
-    defaultTasks("generateMetadata")
-
-    sourceSets {
-        main {
-            java.srcDir("src")
-        }
-    }
-
-    dependencies {
-        if (path != ":kbootstrap") {
-            api(project(":kbootstrap"))
-        }
-    }
+mod {
+    languageAdapter("kbootstrap", "net.auoeke.kbootstrap.Adapter")
+    custom(modmenu: [badges: ["library"]])
 }
 
 dependencies {
-    subprojects {
-        if (path != ":testmod") {
-            api(include(project))
-        }
+    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib:latest.release")
+    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release")
+    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-core:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:latest.release")
+    compileOnlyApi("org.jetbrains.kotlin:kotlin-reflect:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:latest.release")
+    compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:latest.release")
+}
+
+sourceSets {
+    main {
+        java.srcDir("src")
+        kotlin.srcDir("src")
     }
 }
