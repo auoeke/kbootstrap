@@ -26,7 +26,7 @@ plugins {
 }
 ```
 
-KBootstrap's plugin will apply the plugin `org.jetbrains.kotlin.jvm` and configure its target JVM version to `targetCompatibility` as recommended.
+KBootstrap's plugin will apply the plugin `org.jetbrains.kotlin.jvm` and configure its target JVM version to `targetCompatibility` as recommended. `org.jetbrains.kotlin.plugin.serialization` will also be applied.
 
 To use additional Kotlin libraries, add their corresponding modules:
 ```groovy
