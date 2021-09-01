@@ -16,6 +16,14 @@ class KBootstrapPlugin : Plugin<Project> {
         val extension = KBootstrapExtension()
         project.extensions.add("kbootstrap", extension)
 
+        val outputDirectory = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
+
+        java.sourceSets.all {
+            it.output.dir(outputDirectory)
+            project.dependencies.add(it.runtimeOnlyConfigurationName, project.files(outputDirectory))
+        }
+        // val it = java.sourceSets.getByName("main")
+
         project.afterEvaluate {
             project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
             project.tasks.withType(KotlinCompile::class.java) {
@@ -38,11 +46,6 @@ class KBootstrapPlugin : Plugin<Project> {
                 }
 
             }
-
-            val outputDirectory = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
-
-            java.sourceSets.withEach {output.dir(outputDirectory)}
-            project.dependencies.add("runtimeOnly", project.files(outputDirectory))
 
             outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
         }

@@ -13,6 +13,7 @@ sourceSets {
 kbootstrap {
     // The standard library is always included.
     module("coroutines", "reflect", "serialization")
+
     // or
     allModules()
 }
@@ -23,8 +24,10 @@ wheel {
     }
 }
 
-dependencies {
-    runtimeOnly(rootProject)
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("net.auoeke:kbootstrap")).using(project(":"))
+    }
 }
 
 mod {

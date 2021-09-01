@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm").version("latest.release")
 }
 
+group = "net.auoeke"
+
 sourceSets {
     main {
         kotlin.srcDir("src")
