@@ -1,7 +1,7 @@
 plugins {
     id("wheel-fabric")
     id("fabric.mod.gradle")
-    id("kbootstrap-plugin").version("latest.release")
+    id("kbootstrap-plugin")
 }
 
 sourceSets {
