@@ -32,7 +32,7 @@ To use additional Kotlin libraries, add their corresponding modules:
 ```groovy
 // The standard library is always included.
 // Pick from these modules those that you want.
-module("coroutines", "reflect", "serialization")
+modules("coroutines", "reflect", "serialization")
 
 // or
 allModules()

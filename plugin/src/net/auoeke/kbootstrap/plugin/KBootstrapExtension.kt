@@ -3,7 +3,7 @@ package net.auoeke.kbootstrap.plugin
 class KBootstrapExtension {
     internal val modules: MutableSet<String> = HashSet()
 
-    fun module(vararg names: String) {
+    fun modules(vararg names: String) {
         names.forEach {
             if (it !in allowedModules) {
                 throw IllegalArgumentException(""""$it" does not name a valid module (any of $allowedModules).""")
