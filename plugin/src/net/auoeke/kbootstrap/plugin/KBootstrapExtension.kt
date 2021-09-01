@@ -18,6 +18,6 @@ class KBootstrapExtension {
     }
 
     companion object {
-        private val allowedModules: Array<String> = arrayOf("coroutines", "reflect", "serialization")
+        private val allowedModules: Array<String> = arrayOf("coroutines", "reflect")
     }
 }

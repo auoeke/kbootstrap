@@ -2,7 +2,7 @@ package net.auoeke.testmod
 
 import net.fabricmc.api.ModInitializer
 
-private class Main : ModInitializer {
+private class InitializerTest : ModInitializer {
     private val mainInitializer: ModInitializer = ModInitializer {println("hello from field initializer")}
 
     override fun onInitialize() = println("hello from onInitialize")

@@ -3,7 +3,7 @@ The libraries are cached under the operating system's temporary directory.
 
 Like Fabric Language Kotlin, KBootstrap provides a Kotlin language adapter named "kbootstrap".
 
-By default, KBootstrap downloads only the standard library; mods may specify any of the additional modules listed below.
+By default, KBootstrap downloads the standard and serialization libraries; mods may specify any of the additional modules listed below.
 
 Use KBootstrap by applying its Gradle plugin: 
 
@@ -32,7 +32,7 @@ To use additional Kotlin libraries, add their corresponding modules:
 ```groovy
 // The standard library is always included.
 // Pick from these modules those that you want.
-modules("coroutines", "reflect", "serialization")
+modules("coroutines", "reflect")
 
 // or
 allModules()

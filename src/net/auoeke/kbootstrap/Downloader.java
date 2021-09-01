@@ -104,9 +104,7 @@ class Downloader {
 
     }
 
-    static boolean download(boolean x, String name, String typeName) {
-        var downloaded = false;
-
+    static void download(boolean x, String name, String typeName) {
         try {
             var base = x ? "kotlinx" : "kotlin";
             var root = "https://repo.maven.apache.org/maven2/org/jetbrains/%s/%1$s-%s/".formatted(base, name);
@@ -132,8 +130,6 @@ class Downloader {
                         HttpRequest.newBuilder().uri(new URI(url)).build(),
                         HttpResponse.BodyHandlers.ofFile(jar, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING)
                     );
-
-                    downloaded = true;
                 }
 
                 addURL.invoke(jar.toUri().toURL());
@@ -141,12 +137,6 @@ class Downloader {
         } catch (Throwable exception) {
             throw new RuntimeException(exception);
         }
-
-        return downloaded;
-    }
-
-    static boolean download(boolean x, String name) {
-        return download(x, name, null);
     }
 
     static {

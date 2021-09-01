@@ -34,14 +34,14 @@ configurations.all {Configuration configuration ->
 
 mod {
     entrypoints(main: [kbootstrap: [
-        "net.auoeke.testmod.Main::mainInitializer",
-        "net.auoeke.testmod.Main",
-        "net.auoeke.testmod.Main::init",
-        'net.auoeke.testmod.Main$NamedCompanion::staticInitializer',
-        'net.auoeke.testmod.Main$NamedCompanion::initializer',
-        'net.auoeke.testmod.Main$NamedCompanion::staticInit',
-        'net.auoeke.testmod.Main$NamedCompanion',
-        'net.auoeke.testmod.Main$NamedCompanion::init',
+        "net.auoeke.testmod.InitializerTest::mainInitializer",
+        "net.auoeke.testmod.InitializerTest",
+        "net.auoeke.testmod.InitializerTest::init",
+        'net.auoeke.testmod.InitializerTest$NamedCompanion::staticInitializer',
+        'net.auoeke.testmod.InitializerTest$NamedCompanion::initializer',
+        'net.auoeke.testmod.InitializerTest$NamedCompanion::staticInit',
+        'net.auoeke.testmod.InitializerTest$NamedCompanion',
+        'net.auoeke.testmod.InitializerTest$NamedCompanion::init',
         "net.auoeke.testmod.Object::staticInitializer",
         "net.auoeke.testmod.Object::initializer",
         "net.auoeke.testmod.Object::staticInit",
