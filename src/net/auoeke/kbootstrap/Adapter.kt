@@ -111,7 +111,7 @@ internal class Adapter : LanguageAdapter {
     init {
         Downloader.download(false, "stdlib", "kotlin.Unit")
 
-        Downloader.knotLoader.getResources("kbootstrap-metadata").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
+        Downloader.knotLoader.getResources("kbootstrap-modules").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
             when (it.lowercase()) {
                 "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library)}
                 "reflect" -> Downloader.download(false, "reflect", "kotlin.reflect.jvm.KClassesJvm")

@@ -22,7 +22,6 @@ class KBootstrapPlugin : Plugin<Project> {
 
         val outputDirectory = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
         project.dependencies.add("runtimeOnly", project.files(outputDirectory))
-        outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
 
         project.afterEvaluate {
             extension.modules.forEach {
@@ -42,6 +41,8 @@ class KBootstrapPlugin : Plugin<Project> {
             }
 
             project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
+
+            outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
         }
     }
 
