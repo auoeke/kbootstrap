@@ -11,10 +11,6 @@ sourceSets {
 }
 
 kbootstrap {
-    // The standard library is always included.
-    module("coroutines", "reflect", "serialization")
-
-    // or
     allModules()
 }
 

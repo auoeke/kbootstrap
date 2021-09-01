@@ -13,23 +13,18 @@ class KBootstrapPlugin : Plugin<Project> {
 
         val java = project.extensions.getByType(JavaPluginExtension::class.java)
 
+        project.tasks.withType(KotlinCompile::class.java) {compileKotlin ->
+            compileKotlin.kotlinOptions.jvmTarget = java.targetCompatibility.toString()
+        }
+
         val extension = KBootstrapExtension()
         project.extensions.add("kbootstrap", extension)
 
         val outputDirectory = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
-
-        java.sourceSets.all {
-            it.output.dir(outputDirectory)
-            project.dependencies.add(it.runtimeOnlyConfigurationName, project.files(outputDirectory))
-        }
-        // val it = java.sourceSets.getByName("main")
+        project.dependencies.add("runtimeOnly", project.files(outputDirectory))
+        outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
 
         project.afterEvaluate {
-            project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
-            project.tasks.withType(KotlinCompile::class.java) {
-                it.kotlinOptions.jvmTarget = java.targetCompatibility.toString()
-            }
-
             extension.modules.forEach {
                 when (it) {
                     "coroutines" -> with(project.dependencies) {
@@ -44,10 +39,9 @@ class KBootstrapPlugin : Plugin<Project> {
                         compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:latest.release")
                     }
                 }
-
             }
 
-            outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
+            project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
         }
     }
 

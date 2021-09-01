@@ -21,6 +21,7 @@ pluginManagement {
 `build.gradle`:
 ```groovy
 plugins {
+    // your other plugins
     id("kbootstrap-plugin").version("latest.release") // Or choose a version from https://maven.auoeke.net/net/auoeke/kbootstrap-plugin.
 }
 ```
