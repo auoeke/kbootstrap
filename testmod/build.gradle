@@ -21,13 +21,13 @@ wheel {
 }
 
 dependencies {
-    implementation(rootProject)
+    include(implementation(rootProject))
 }
 
 configurations.all {Configuration configuration ->
     configuration.dependencies.all {Dependency dependency ->
         if (dependency instanceof ExternalModuleDependency && dependency.module as String == "net.auoeke:kbootstrap") {
-            configurations.modApi.dependencies.remove(dependency)
+            configuration.dependencies.remove(dependency)
         }
     }
 }
