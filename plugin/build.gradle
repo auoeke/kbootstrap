@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     api("org.jetbrains.kotlin:kotlin-gradle-plugin:latest.release")
+    api("org.jetbrains.kotlin:kotlin-serialization:latest.release")
 }
 
 gradlePlugin {

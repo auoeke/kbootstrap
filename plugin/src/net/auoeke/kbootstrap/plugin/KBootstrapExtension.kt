@@ -1,6 +1,8 @@
 package net.auoeke.kbootstrap.plugin
 
-class KBootstrapExtension {
+import org.gradle.api.Project
+
+class KBootstrapExtension(val project: Project) {
     internal val modules: MutableSet<String> = HashSet()
 
     fun modules(vararg names: String) {

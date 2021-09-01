@@ -47,5 +47,7 @@ mod {
         "net.auoeke.testmod.Object::staticInit",
         "net.auoeke.testmod.Object",
         "net.auoeke.testmod.Object::init",
+
+        "net.auoeke.testmod.Serialization"
     ]])
 }

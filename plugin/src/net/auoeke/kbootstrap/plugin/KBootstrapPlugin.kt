@@ -10,14 +10,18 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "unused")
 class KBootstrapPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.plugins.apply("org.jetbrains.kotlin.jvm")
+        project.plugins.run {
+            apply("org.jetbrains.kotlin.jvm")
+            apply("org.jetbrains.kotlin.plugin.serialization")
+        }
+
         val java = project.extensions.getByType(JavaPluginExtension::class.java)
 
         project.tasks.withType(KotlinCompile::class.java) {compileKotlin ->
             compileKotlin.kotlinOptions.jvmTarget = java.targetCompatibility.toString()
         }
 
-        val extension = KBootstrapExtension()
+        val extension = KBootstrapExtension(project)
         project.extensions.add("kbootstrap", extension)
 
         val task = project.tasks.create("kbootstrapMarker", GenerateMarker::class.java, java.sourceSets.getByName("main"), extension)
