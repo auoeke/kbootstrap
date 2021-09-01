@@ -4,7 +4,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "unused")
@@ -21,11 +20,11 @@ class KBootstrapPlugin : Plugin<Project> {
         val extension = KBootstrapExtension()
         project.extensions.add("kbootstrap", extension)
 
-        val outputDirectory = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
-        project.dependencies.add("runtimeOnly", project.files(outputDirectory))
-        (project.tasks.getByName("jar") as Jar).from(outputDirectory)
+        val task = project.tasks.create("kbootstrapMarker", GenerateMarker::class.java, java.sourceSets.getByName("main"), extension)
 
         project.afterEvaluate {
+            project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
+
             extension.modules.forEach {
                 when (it) {
                     "coroutines" -> with(project.dependencies) {
@@ -42,9 +41,7 @@ class KBootstrapPlugin : Plugin<Project> {
                 }
             }
 
-            project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
-
-            outputDirectory.resolve("kbootstrap-modules").writeText(extension.modules.joinToString(":"))
+            task.generate()
         }
     }
 
