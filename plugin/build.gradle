@@ -28,7 +28,7 @@ dependencies {
 gradlePlugin {
     plugins {
         kbootstrap {
-            id = "kbootstrap-plugin"
+            id = "kbootstrap"
             implementationClass = "net.auoeke.kbootstrap.plugin.KBootstrapPlugin"
         }
     }
