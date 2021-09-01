@@ -11,8 +11,8 @@ Use KBootstrap by applying its Gradle plugin:
 ```groovy
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         // your other repositories
+        gradlePluginPortal()
         maven {url = "https://maven.auoeke.net"}
     }
 }
