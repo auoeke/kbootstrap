@@ -12,7 +12,7 @@ Use KBootstrap by applying its Gradle plugin:
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        
+        // your other repositories
         maven {url = "https://maven.auoeke.net"}
     }
 }
