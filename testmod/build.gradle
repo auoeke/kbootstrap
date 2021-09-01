@@ -27,7 +27,7 @@ dependencies {
 configurations.all {Configuration configuration ->
     configuration.dependencies.all {Dependency dependency ->
         if (dependency instanceof ExternalModuleDependency && dependency.module as String == "net.auoeke:kbootstrap") {
-            configuration.dependencies.remove(dependency)
+            configurations.modApi.dependencies.remove(dependency)
         }
     }
 }

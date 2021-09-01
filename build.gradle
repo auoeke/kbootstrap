@@ -5,9 +5,13 @@ plugins {
 }
 
 group = "net.auoeke"
-version = "0.0.1"
+version = "0.0.0"
 
 defaultTasks("generateMetadata")
+
+compileKotlin {
+    kotlinOptions.jvmTarget = targetCompatibility
+}
 
 mod {
     languageAdapter("kbootstrap", "net.auoeke.kbootstrap.Adapter")
