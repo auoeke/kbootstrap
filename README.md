@@ -6,6 +6,7 @@ Like Fabric Language Kotlin, KBootstrap provides a Kotlin language adapter named
 By default, KBootstrap downloads only the standard library; mods may specify any of the additional modules listed below.
 
 Use KBootstrap by applying its Gradle plugin: 
+
 `settings.gradle`:
 ```groovy
 pluginManagement {
@@ -24,7 +25,7 @@ plugins {
 }
 ```
 
-The plugin will apply the plugin `org.jetbrains.kotlin.jvm` and configure its target JVM version to `targetCompatibility` as recommended.
+KBootstrap's plugin will apply the plugin `org.jetbrains.kotlin.jvm` and configure its target JVM version to `targetCompatibility` as recommended.
 
 To use additional Kotlin libraries, add their corresponding modules:
 ```groovy
@@ -35,3 +36,4 @@ module("coroutines", "reflect", "serialization")
 // or
 allModules()
 ```
+
