@@ -18,7 +18,18 @@ class KBootstrapPlugin : Plugin<Project> {
 
         val extension = KBootstrapExtension()
         project.extensions.add("kbootstrap", extension)
-        project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))
+
+        val addKBootstrap = {project.dependencies.add("include", project.dependencies.add("modApi", "net.auoeke:kbootstrap:latest.release"))}
+
+        if  (project.configurations.findByName("modApi") === null) {
+            project.configurations.whenObjectAdded {
+                if (it.name == "modApi") {
+                    addKBootstrap()
+                }
+            }
+        } else {
+            addKBootstrap()
+        }
 
         val task = project.tasks.create("kbootstrapMarker", GenerateMarker::class.java, java.sourceSets.getByName("main"), extension)
 
