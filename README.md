@@ -22,7 +22,7 @@ pluginManagement {
 ```groovy
 plugins {
     // your other plugins
-    id("kbootstrap").version("latest.release") // Or choose a version from https://maven.auoeke.net/net/auoeke/kbootstrap-plugin.
+    id("kbootstrap").version("latest.release") // All versions are at https://maven.auoeke.net/net/auoeke/kbootstrap-plugin.
 }
 ```
 
