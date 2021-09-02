@@ -31,7 +31,7 @@ KBootstrap's plugin will apply the plugin `org.jetbrains.kotlin.jvm` and configu
 To use additional Kotlin libraries, add their corresponding modules:
 ```groovy
 kbootstrap {
-    // The standard library is always included.
+    // The standard and serialization libraries are always included.
     // Pick from these modules those that you want.
     modules("coroutines", "reflect")
 
