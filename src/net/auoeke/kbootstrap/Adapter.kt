@@ -109,14 +109,14 @@ internal class Adapter : LanguageAdapter {
     }
 
     init {
-        Downloader.download(false, "stdlib", "kotlin.Unit")
-        Downloader.download(true, "serialization-core-jvm", "kotlinx.serialization.Serializable")
-        Downloader.download(true, "serialization-json-jvm", "kotlinx.serialization.json.JsonElement")
+        Downloader.download(false, "stdlib")
+        Downloader.download(true, "serialization-core-jvm")
+        Downloader.download(true, "serialization-json-jvm")
 
         Downloader.knotLoader.getResources("kbootstrap-modules").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
             when (it.lowercase()) {
-                "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library, null)}
-                "reflect" -> Downloader.download(false, "reflect", "kotlin.reflect.jvm.KClassesJvm")
+                "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library)}
+                "reflect" -> Downloader.download(false, "reflect")
             }
         }
     }
