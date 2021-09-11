@@ -1,6 +1,7 @@
 package net.auoeke.testmod
 
 import net.fabricmc.api.ModInitializer
+import kotlin.reflect.KClass
 
 private class InitializerTest : ModInitializer {
     private val mainInitializer: ModInitializer = ModInitializer {println("hello from field initializer")}
@@ -33,4 +34,9 @@ private object Object : ModInitializer {
 
     override fun onInitialize() = println("hello from object onInitialize")
     private fun init() = println("hello from object non-static init")
+
+    init {
+        @Suppress("USELESS_IS_CHECK")
+        assert(Object::class is KClass<*>)
+    }
 }

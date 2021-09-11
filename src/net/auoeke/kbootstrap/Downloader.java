@@ -1,10 +1,8 @@
 package net.auoeke.kbootstrap;
 
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -12,13 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import javax.xml.parsers.DocumentBuilderFactory;
+import net.auoeke.safe.Safe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
 
 class Downloader {
     static final Logger logger = LogManager.getLogger("KBootstrap");
-    static final ClassLoader knotLoader = Downloader.class.getClassLoader();
 
     private static final HttpClient http = HttpClient.newHttpClient();
     private static final MethodHandle addURL;
@@ -90,7 +88,7 @@ class Downloader {
                 );
             }
 
-            addURL.invoke(jar.toUri().toURL());
+            addURL.invoke(jar.toString());
         } catch (Throwable exception) {
             throw new RuntimeException(exception);
         }
@@ -98,7 +96,7 @@ class Downloader {
 
     static {
         try {
-            addURL = MethodHandles.privateLookupIn(knotLoader.getClass(), MethodHandles.lookup()).bind(knotLoader, "addURL", MethodType.methodType(void.class, URL.class));
+            addURL = Safe.lookup.bind(ClassLoader.getSystemClassLoader(), "appendClassPath", MethodType.methodType(void.class, String.class));
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);
         }

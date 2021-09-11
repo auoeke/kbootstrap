@@ -12,14 +12,14 @@ import java.util.stream.Stream
 
 @Suppress("UNCHECKED_CAST", "unused")
 internal class Adapter : LanguageAdapter {
-    override fun <T> create(mod: ModContainer?, value: String, type: Class<T>): T = create(value, type)
+    override fun <T> create(mod: ModContainer?, value: String, type: Class<T>): T = this.create(value, type)
 
     private fun companionField(companionType: Class<*>): Field? {
         companionType.declaringClass?.also {declaringType ->
-            for (field in declaringType.declaredFields) {
-                val staticFinal = Modifier.STATIC or Modifier.FINAL
+            val staticFinal = Modifier.STATIC or Modifier.FINAL
 
-                if (field.type == companionType && field.modifiers and staticFinal == staticFinal) {
+            for (field in declaringType.declaredFields) {
+                if (field.type === companionType && field.modifiers and staticFinal == staticFinal) {
                     return field
                 }
             }
@@ -32,7 +32,7 @@ internal class Adapter : LanguageAdapter {
         val field: Field = try {
             type.getDeclaredField("INSTANCE")
         } catch (exception: NoSuchFieldException) {
-            companionField(type)
+            this.companionField(type)
         }?.apply {trySetAccessible()} ?: return null
 
         return field[null] as T?
@@ -54,8 +54,7 @@ internal class Adapter : LanguageAdapter {
                         if (field.modifiers and staticFinal == staticFinal) {
                             return@run
                         }
-                    } catch (ignored: NoSuchFieldException) {
-                    }
+                    } catch (ignored: NoSuchFieldException) {}
                 }
 
                 throw exception
@@ -69,11 +68,7 @@ internal class Adapter : LanguageAdapter {
         return field.apply {trySetAccessible()}
     }
 
-    private fun <T> instantiate(type: Class<T>): T {
-        findInstance(type)?.also {return it}
-
-        return type.getDeclaredConstructor().apply {trySetAccessible()}.newInstance() as T
-    }
+    private fun <T> instantiate(type: Class<T>): T = this.findInstance(type) ?: type.getDeclaredConstructor().apply {trySetAccessible()}.newInstance() as T
 
     private fun <T> create(value: String, type: Class<T>? = null): T {
         var components: Array<String> = value.split("::".toRegex()).toTypedArray()
@@ -89,7 +84,7 @@ internal class Adapter : LanguageAdapter {
         }
 
         if (components.size == 1) {
-            return instantiate(target)
+            return this.instantiate(target)
         }
 
         return try {
@@ -97,14 +92,17 @@ internal class Adapter : LanguageAdapter {
             var handle = MethodHandles.privateLookupIn(target, MethodHandles.lookup()).unreflect(method)
 
             if (!Modifier.isStatic(method.modifiers)) {
-                handle = handle.bindTo(instantiate(target))
+                handle = handle.bindTo(this.instantiate(target))
             }
 
             MethodHandleProxies.asInterfaceInstance(type, handle)
         } catch (exception: NoSuchMethodException) {
-            val field = findField(target, components[1])
+            val field = this.findField(target, components[1])
 
-            field[if (Modifier.isStatic(field.modifiers)) null else instantiate(target)] as T
+            field[when {
+                Modifier.isStatic(field.modifiers) -> null
+                else -> this.instantiate(target)
+            }] as T
         }
     }
 
@@ -113,7 +111,7 @@ internal class Adapter : LanguageAdapter {
         Downloader.download(true, "serialization-core-jvm")
         Downloader.download(true, "serialization-json-jvm")
 
-        Downloader.knotLoader.getResources("kbootstrap-modules").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
+        this.javaClass.classLoader.getResources("kbootstrap-modules").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
             when (it.lowercase()) {
                 "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library)}
                 "reflect" -> Downloader.download(false, "reflect")

@@ -18,6 +18,8 @@ wheel {
     publish {
         enabled = false
     }
+
+    genSources = null
 }
 
 dependencies {
