@@ -1,13 +1,3 @@
-buildscript {
-    configurations.classpath {
-        resolutionStrategy.eachDependency {
-            if (requested.name == "fabric-loom") {
-                useVersion("0.9.+")
-            }
-        }
-    }
-}
-
 plugins {
     id("wheel-fabric").version("latest.integration")
     id("fabric.mod.gradle").version("latest.integration")
