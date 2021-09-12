@@ -32,7 +32,7 @@ internal class Adapter : LanguageAdapter {
         val field: Field = try {
             type.getDeclaredField("INSTANCE")
         } catch (exception: NoSuchFieldException) {
-            this.companionField(type)
+            companionField(type)
         }?.apply {trySetAccessible()} ?: return null
 
         return field[null] as T?
@@ -68,7 +68,7 @@ internal class Adapter : LanguageAdapter {
         return field.apply {trySetAccessible()}
     }
 
-    private fun <T> instantiate(type: Class<T>): T = this.findInstance(type) ?: type.getDeclaredConstructor().apply {trySetAccessible()}.newInstance() as T
+    private fun <T> instantiate(type: Class<T>): T = findInstance(type) ?: type.getDeclaredConstructor().apply {trySetAccessible()}.newInstance() as T
 
     private fun <T> create(value: String, type: Class<T>? = null): T {
         var components: Array<String> = value.split("::".toRegex()).toTypedArray()
@@ -84,7 +84,7 @@ internal class Adapter : LanguageAdapter {
         }
 
         if (components.size == 1) {
-            return this.instantiate(target)
+            return instantiate(target)
         }
 
         return try {
@@ -92,16 +92,16 @@ internal class Adapter : LanguageAdapter {
             var handle = MethodHandles.privateLookupIn(target, MethodHandles.lookup()).unreflect(method)
 
             if (!Modifier.isStatic(method.modifiers)) {
-                handle = handle.bindTo(this.instantiate(target))
+                handle = handle.bindTo(instantiate(target))
             }
 
             MethodHandleProxies.asInterfaceInstance(type, handle)
         } catch (exception: NoSuchMethodException) {
-            val field = this.findField(target, components[1])
+            val field = findField(target, components[1])
 
             field[when {
                 Modifier.isStatic(field.modifiers) -> null
-                else -> this.instantiate(target)
+                else -> instantiate(target)
             }] as T
         }
     }

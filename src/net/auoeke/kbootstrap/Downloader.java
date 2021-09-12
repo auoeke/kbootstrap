@@ -1,6 +1,7 @@
 package net.auoeke.kbootstrap;
 
 import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,10 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import javax.xml.parsers.DocumentBuilderFactory;
-import net.auoeke.safe.Safe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
+import sun.misc.Unsafe;
 
 class Downloader {
     static final Logger logger = LogManager.getLogger("KBootstrap");
@@ -96,7 +97,11 @@ class Downloader {
 
     static {
         try {
-            addURL = Safe.lookup.bind(ClassLoader.getSystemClassLoader(), "appendClassPath", MethodType.methodType(void.class, String.class));
+            var theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+            theUnsafe.trySetAccessible();
+            var unsafe = ((Unsafe) theUnsafe.get(null));
+            var lookup = (MethodHandles.Lookup) unsafe.getObject(MethodHandles.Lookup.class, unsafe.staticFieldOffset(MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP")));
+            addURL = lookup.bind(ClassLoader.getSystemClassLoader(), "appendClassPath", MethodType.methodType(void.class, String.class));
         } catch (ReflectiveOperationException exception) {
             throw new RuntimeException(exception);
         }

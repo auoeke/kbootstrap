@@ -11,27 +11,27 @@ import javax.inject.Inject
 @Suppress("LeakingThis")
 open class GenerateMarker @Inject constructor(private val set: SourceSet, private val extension: KBootstrapExtension) : DefaultTask() {
     @OutputDirectory
-    val output: File = this.project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
+    val output: File = project.buildDir.resolve("generated/resources/all").apply {mkdirs()}
 
-    private val jar: Jar = this.project.tasks.getByName("jar") as Jar
+    private val jar: Jar = project.tasks.getByName("jar") as Jar
 
     init {
         this.outputs.upToDateWhen {false}
 
-        this.project.tasks.getByName(this.set.classesTaskName).also {
-            this.dependsOn(it)
+        project.tasks.getByName(set.classesTaskName).also {
+            dependsOn(it)
             it.finalizedBy(this)
         }
 
-        this.jar.dependsOn(this)
-        this.project.dependencies.add(this.set.runtimeOnlyConfigurationName, this.project.files(this.output))
+        jar.dependsOn(this)
+        project.dependencies.add(set.runtimeOnlyConfigurationName, project.files(output))
     }
 
     @TaskAction
     fun generate() {
-        this.set.output.dir(this.output)
-        this.jar.from(this.project.files(this.output))
+        set.output.dir(output)
+        jar.from(project.files(output))
 
-        this.output.resolve("kbootstrap-modules").writeText(this.extension.modules.joinToString(":"))
+        output.resolve("kbootstrap-modules").writeText(this.extension.modules.joinToString(":"))
     }
 }

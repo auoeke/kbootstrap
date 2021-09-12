@@ -11,12 +11,12 @@ class KBootstrapExtension(val project: Project) {
                 throw IllegalArgumentException(""""$it" does not name a valid module (any of $allowedModules).""")
             }
 
-            this.modules += it
+            modules += it
         }
     }
 
     fun allModules() {
-        this.modules += allowedModules
+        modules += allowedModules
     }
 
     companion object {
