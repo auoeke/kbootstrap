@@ -18,7 +18,7 @@ mod {
 }
 
 dependencies {
-    implementation("net.auoeke:safe")
+    modInclude("net.auoeke:safe")
 
     compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib:latest.release")
     compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release")
