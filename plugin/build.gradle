@@ -6,6 +6,9 @@ plugins {
 
 group = "net.auoeke"
 
+sourceCompatibility = 16
+targetCompatibility = 16
+
 sourceSets {
     main {
         kotlin.srcDir("src")
