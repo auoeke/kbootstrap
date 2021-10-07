@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.tasks.compile.JavaCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "unused")
@@ -15,19 +16,20 @@ class KBootstrapPlugin : Plugin<Project> {
             apply("org.jetbrains.kotlin.plugin.serialization")
         }
 
-        val java = project.extensions.getByType(JavaPluginExtension::class.java)
-
-        project.tasks.withType(KotlinCompile::class.java) {compileKotlin ->
-            compileKotlin.kotlinOptions.jvmTarget = java.targetCompatibility.toString()
-        }
-
         val extension = KBootstrapExtension(project)
         project.extensions.add("kbootstrap", extension)
 
+        val java = project.extensions.getByType(JavaPluginExtension::class.java)
         val task = project.tasks.create("kbootstrapMarker", GenerateMarker::class.java, java.sourceSets.getByName("main"), extension)
 
         project.afterEvaluate {
-            project.dependencies.run {
+            project.tasks.withType(KotlinCompile::class.java) {task ->
+                task.first {
+                    task.kotlinOptions.jvmTarget = (project.tasks.getByName(task.name.replace("Kotlin$".toRegex(), "Java")) as JavaCompile).targetCompatibility.toString()
+                }
+            }
+
+           project.dependencies.run {
                 include(modApi("net.auoeke:kbootstrap:latest.release"))
                 compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:latest.release")
                 compileOnlyApi("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:latest.release")

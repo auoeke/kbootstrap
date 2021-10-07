@@ -8,6 +8,9 @@ group = "net.auoeke"
 
 defaultTasks("generateMetadata")
 
+sourceCompatibility = 16
+targetCompatibility = 16
+
 compileKotlin {
     kotlinOptions.jvmTarget = targetCompatibility
 }
