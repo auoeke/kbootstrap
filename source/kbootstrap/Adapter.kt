@@ -1,14 +1,9 @@
-package net.auoeke.kbootstrap
+package kbootstrap
 
-import net.fabricmc.loader.api.LanguageAdapter
-import net.fabricmc.loader.api.LanguageAdapterException
-import net.fabricmc.loader.api.ModContainer
-import java.lang.invoke.MethodHandleProxies
-import java.lang.invoke.MethodHandles
-import java.lang.reflect.Field
-import java.lang.reflect.Modifier
-import java.util.stream.Collectors
-import java.util.stream.Stream
+import net.fabricmc.loader.api.*
+import java.lang.invoke.*
+import java.lang.reflect.*
+import java.util.stream.*
 
 @Suppress("UNCHECKED_CAST", "unused")
 internal class Adapter : LanguageAdapter {
@@ -103,19 +98,6 @@ internal class Adapter : LanguageAdapter {
                 Modifier.isStatic(field.modifiers) -> null
                 else -> instantiate(target)
             }] as T
-        }
-    }
-
-    init {
-        Downloader.download(false, "stdlib")
-        Downloader.download(true, "serialization-core-jvm")
-        Downloader.download(true, "serialization-json-jvm")
-
-        this.javaClass.classLoader.getResources("kbootstrap-modules").asSequence().flatMapTo(HashSet()) {it.readText().split(':')}.forEach {
-            when (it.lowercase()) {
-                "coroutines" -> arrayOf("coroutines-core", "coroutines-core-jvm", "coroutines-jdk8", "coroutines-jdk9").forEach {library -> Downloader.download(true, library)}
-                "reflect" -> Downloader.download(false, "reflect")
-            }
         }
     }
 }

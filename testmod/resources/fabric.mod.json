@@ -1,0 +1,65 @@
+{
+    "schemaVersion": 1,
+    "id": "testmod",
+    "version": "${version}",
+    "entrypoints": {
+        "main": [
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest::mainInitializer"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest::init"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest$NamedCompanion::staticInitializer"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest$NamedCompanion::initializer"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest$NamedCompanion::staticInit"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest$NamedCompanion"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.InitializerTest$NamedCompanion::init"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Object::staticInitializer"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Object::initializer"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Object::staticInit"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Object"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Object::init"
+            },
+            {
+                "adapter": "kbootstrap",
+                "value": "net.auoeke.testmod.Serialization"
+            }
+        ]
+    }
+}

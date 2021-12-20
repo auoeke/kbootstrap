@@ -1,0 +1,13 @@
+{
+    "schemaVersion": 1,
+    "id": "kbootstrap",
+    "version": "${version}",
+    "languageAdapters": {
+        "kbootstrap": "kbootstrap.Adapter"
+    },
+    "custom": {
+        "modmenu": {
+            "badges": ["library"]
+        }
+    }
+}

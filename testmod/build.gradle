@@ -1,12 +1,13 @@
 plugins {
-    id("wheel-fabric")
-    id("fabric.mod.gradle")
+    id("wheel")
     id("kbootstrap")
 }
 
 sourceSets {
     main {
+        java.srcDir("src")
         kotlin.srcDir("src")
+        resources.srcDir("resources")
     }
 }
 
@@ -28,28 +29,8 @@ dependencies {
 
 configurations.all {Configuration configuration ->
     configuration.dependencies.all {Dependency dependency ->
-        if (dependency instanceof ExternalModuleDependency && dependency.module as String == "net.auoeke:kbootstrap") {
+        if (dependency instanceof ExternalModuleDependency && dependency.group == project.group) {
             configuration.dependencies.remove(dependency)
         }
     }
-}
-
-mod {
-    entrypoints(main: [kbootstrap: [
-        "net.auoeke.testmod.InitializerTest::mainInitializer",
-        "net.auoeke.testmod.InitializerTest",
-        "net.auoeke.testmod.InitializerTest::init",
-        'net.auoeke.testmod.InitializerTest$NamedCompanion::staticInitializer',
-        'net.auoeke.testmod.InitializerTest$NamedCompanion::initializer',
-        'net.auoeke.testmod.InitializerTest$NamedCompanion::staticInit',
-        'net.auoeke.testmod.InitializerTest$NamedCompanion',
-        'net.auoeke.testmod.InitializerTest$NamedCompanion::init',
-        "net.auoeke.testmod.Object::staticInitializer",
-        "net.auoeke.testmod.Object::initializer",
-        "net.auoeke.testmod.Object::staticInit",
-        "net.auoeke.testmod.Object",
-        "net.auoeke.testmod.Object::init",
-
-        "net.auoeke.testmod.Serialization"
-    ]])
 }

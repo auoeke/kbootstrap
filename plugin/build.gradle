@@ -4,14 +4,12 @@ plugins {
     id("org.jetbrains.kotlin.jvm").version("latest.release")
 }
 
-group = "net.auoeke"
-
-sourceCompatibility = 16
-targetCompatibility = 16
+sourceCompatibility = 17
+targetCompatibility = 17
 
 sourceSets {
     main {
-        kotlin.srcDir("src")
+        kotlin.srcDir("source")
     }
 }
 
@@ -40,7 +38,7 @@ gradlePlugin {
 publishing {
     repositories {
         maven {
-            url = "https://auoeke.jfrog.io/artifactory/maven"
+            url = "https://maven.auoeke.net"
 
             credentials {
                 username = System.properties["maven.username"]

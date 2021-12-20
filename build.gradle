@@ -1,34 +1,40 @@
 plugins {
-    id("wheel-fabric").version("latest.integration")
-    id("fabric.mod.gradle").version("latest.integration")
+    id("maven-publish")
+    id("wheel").version("0-SNAPSHOT")
     id("org.jetbrains.kotlin.jvm").version("latest.release")
 }
 
-group = "net.auoeke"
+wheel {
+    java = 17
+}
 
-defaultTasks("generateMetadata")
+sourceSets {
+    main {
+        [java, kotlin, resources]*.srcDirs("source")
 
-sourceCompatibility = 16
-targetCompatibility = 16
+        resources {
+            include("fabric.mod.json")
+        }
+    }
+}
 
 compileKotlin {
     kotlinOptions.jvmTarget = targetCompatibility
 }
 
-mod {
-    languageAdapter("kbootstrap", "net.auoeke.kbootstrap.Adapter")
-    custom(modmenu: [badges: ["library"]])
+repositories {
+    maven {url = "https://maven.fabricmc.net"}
 }
 
 dependencies {
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib:latest.release")
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release")
-    compileOnlyApi("org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release")
-}
+    compileOnlyApi(
+        "org.jetbrains.kotlin:kotlin-stdlib:latest.release",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release",
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release"
+    )
 
-sourceSets {
-    main {
-        java.srcDir("src")
-        kotlin.srcDir("src")
-    }
+    compileOnly(
+        "org.apache.logging.log4j:log4j-api:latest.release",
+        "org.apache.commons:commons-io:latest.release"
+    )
 }
