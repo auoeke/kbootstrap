@@ -10,7 +10,10 @@ wheel {
 
 sourceSets {
     main {
-        [java, kotlin, resources]*.srcDirs("source")
+        [java, kotlin, resources].each {
+            it.srcDirs("source")
+            it.include("*.java", "*.kt")
+        }
 
         resources {
             include("fabric.mod.json")
