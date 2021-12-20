@@ -100,4 +100,8 @@ internal class Adapter : LanguageAdapter {
             }] as T
         }
     }
+
+    init {
+        Downloader.download()
+    }
 }
