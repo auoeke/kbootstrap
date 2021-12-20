@@ -25,16 +25,3 @@ compileKotlin {
 repositories {
     maven {url = "https://maven.fabricmc.net"}
 }
-
-dependencies {
-    compileOnlyApi(
-        "org.jetbrains.kotlin:kotlin-stdlib:latest.release",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk7:latest.release",
-        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:latest.release"
-    )
-
-    compileOnly(
-        "org.apache.logging.log4j:log4j-api:latest.release",
-        "org.apache.commons:commons-io:latest.release"
-    )
-}
