@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 import javax.xml.parsers.DocumentBuilderFactory;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.impl.launch.FabricLauncherBase;
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
@@ -33,7 +32,7 @@ public class Downloader {
             var modules = new HashSet<String>();
 
             for (var file : files) {
-                Collections.addAll(modules, IOUtils.toString(file.openStream()).split(":"));
+                Collections.addAll(modules, new String(file.openStream().readAllBytes()).split(":"));
             }
 
             modules.forEach(it -> {
